@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>종가베팅 후보</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="종가베팅">
+<meta name="theme-color" content="#0f172a">
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #fff; --text: #111827; --muted: #6b7280; --line: #e5e7eb;
+    --up: #dc2626; --down: #2563eb; --warn: #b45309; --warn-bg: #fef3c7; --accent: #0f172a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b1120; --card: #131c2e; --text: #e5e7eb; --muted: #94a3b8; --line: #243047;
+            --up: #f87171; --down: #60a5fa; --warn: #fbbf24; --warn-bg: #3a2a0a; --accent: #e5e7eb; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
+         padding: env(safe-area-inset-top) 16px calc(24px + env(safe-area-inset-bottom)); }
+  main { max-width: 640px; margin: 0 auto; }
+  header { padding: 20px 0 8px; }
+  h1 { font-size: 22px; margin: 0; }
+  h2 { font-size: 15px; margin: 28px 0 10px; color: var(--muted); font-weight: 600; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .name { font-weight: 700; font-size: 16px; }
+  .code { color: var(--muted); font-size: 12px; margin-left: 4px; font-weight: 400; }
+  .chg { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .up { color: var(--up); } .down { color: var(--down); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px 10px; margin-top: 10px; font-size: 13px; }
+  .grid div span { display: block; color: var(--muted); font-size: 11px; }
+  .grid b { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .past { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; }
+  .badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 99px; background: var(--warn-bg); color: var(--warn); margin-left: 4px; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .stat { text-align: center; padding: 12px 4px; }
+  .stat b { display: block; font-size: 18px; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 11px; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  td { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  td:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .empty { color: var(--muted); text-align: center; padding: 20px; }
+  .note { color: var(--muted); font-size: 12px; margin-top: 28px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>종가베팅 후보</h1>
+    <div class="meta" id="meta">불러오는 중…</div>
+  </header>
+
+  <h2>오늘 조건 통과</h2>
+  <div id="cands"></div>
+
+  <h2>실제 성적 <span class="meta">종가 매수 → 다음날 시가, 비용 차감</span></h2>
+  <div id="stats"></div>
+  <div class="card" id="track"></div>
+
+  <p class="note">가격·거래량 조건으로 좁힌 후보일 뿐 매수·매도 지시가 아닙니다. 뉴스·공시는 확인하지 않았고, 장중 스냅샷은 동시호가에서 바뀔 수 있습니다. 과거 성적은 미래 수익을 보장하지 않습니다.</p>
+</main>
+<script>
+const f = (x, d = 2, s = "%") => x == null ? "–" : x.toLocaleString("ko-KR", { minimumFractionDigits: d, maximumFractionDigits: d }) + s;
+const cls = x => x == null ? "" : x > 0 ? "up" : x < 0 ? "down" : "";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+fetch("data.json?" + Date.now()).then(r => r.json()).then(d => {
+  document.getElementById("meta").textContent = `${d.updated} KST · ${d.session} · 왕복 비용 ${d.cost_pct}% 가정`;
+
+  const c = document.getElementById("cands");
+  c.innerHTML = d.candidates.length ? d.candidates.map((x, i) => `
+    <div class="card">
+      <div class="row">
+        <div class="name">${i + 1}. ${esc(x.Name)}<span class="code">${x.Code} · ${x.Market}</span></div>
+        <div class="chg ${cls(x["Chg%"])}">${f(x["Chg%"])}</div>
+      </div>
+      <div class="grid">
+        <div><span>종가</span><b>${f(x.Close, 0, "원")}</b></div>
+        <div><span>거래대금</span><b>${f(x["Amount억"], 0, "억")}</b></div>
+        <div><span>거래량 배수</span><b>${f(x.VolRatio, 1, "x")}</b></div>
+        <div><span>종가 위치</span><b>${f(x.ClosePos, 2, "")}</b></div>
+        <div><span>MA20 이격</span><b>${f(x["MA20Gap%"], 1)}</b></div>
+        <div><span>20일 신고가</span><b>${x.Break20H ? "돌파" : "–"}</b></div>
+      </div>
+      <div class="past">과거 같은 신호 <b>${x.sig_n}회</b>${x.sig_n < d.min_samples ? '<span class="badge">표본 부족</span>' : ""}
+        ${x.sig_n ? ` · 평균 <b class="${cls(x["sig_mean%"])}">${f(x["sig_mean%"])}</b> · 승률 ${f(x["sig_win%"], 0)} · 최악 <span class="${cls(x["sig_worst%"])}">${f(x["sig_worst%"])}</span>` : ""}
+      </div>
+    </div>`).join("") : `<div class="card empty">오늘은 조건을 통과한 종목이 없습니다</div>`;
+
+  const s = d.stats;
+  document.getElementById("stats").innerHTML = s ? `
+    <div class="stats">
+      <div class="card stat"><b>${s.n}</b><span>누적 건수</span></div>
+      <div class="card stat"><b class="${cls(s.mean)}">${f(s.mean)}</b><span>평균</span></div>
+      <div class="card stat"><b>${f(s.win, 0)}</b><span>승률</span></div>
+      <div class="card stat"><b class="${cls(s.worst)}">${f(s.worst)}</b><span>최악</span></div>
+    </div>
+    ${s.n < 30 ? `<p class="meta">${s.n}건은 통계로 읽기엔 적습니다 (${s.since}부터)</p>` : `<p class="meta">${s.since}부터 · 중앙값 ${f(s.median)}</p>`}` : "";
+
+  const rows = [
+    ...d.pending.map(x => `<tr><td>${x.date} ${esc(x.Name)}</td><td class="meta">결과 대기</td></tr>`),
+    ...d.track.map(x => `<tr><td>${x.date} ${esc(x.Name)}</td><td class="${cls(x["ret%"])}">${f(x["ret%"])}</td></tr>`),
+  ];
+  document.getElementById("track").innerHTML = rows.length ? `<table>${rows.join("")}</table>`
+    : `<div class="empty">아직 기록이 없습니다. 후보의 다음날 시가가 나오면 쌓입니다.</div>`;
+}).catch(() => { document.getElementById("meta").textContent = "데이터를 불러오지 못했습니다"; });
+</script>
+</body>
+</html>

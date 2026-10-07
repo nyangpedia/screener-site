@@ -1,0 +1,104 @@
+{
+ "updated": "2026-10-07 16:07",
+ "session": "장 마감 후",
+ "cost_pct": 0.33,
+ "min_samples": 5,
+ "candidates": [
+  {
+   "Code": "096530",
+   "Name": "씨젠",
+   "Market": "KOSDAQ GLOBAL",
+   "Close": 40100.0,
+   "Chg%": 5.9445178336,
+   "Amount억": 230.002858,
+   "VolRatio": 2.1429400977,
+   "ClosePos": 0.8771929825,
+   "MA20Gap%": 18.4200812108,
+   "Break20H": true,
+   "sig_n": 8,
+   "sig_mean%": -0.5420852607,
+   "sig_median%": -0.6938803558,
+   "sig_win%": 50.0,
+   "sig_worst%": -2.36125,
+   "last_bar": "2026-10-07"
+  },
+  {
+   "Code": "085620",
+   "Name": "미래에셋생명",
+   "Market": "KOSPI",
+   "Close": 23000.0,
+   "Chg%": 13.0221130221,
+   "Amount억": 102.11185225,
+   "VolRatio": 3.8615102751,
+   "ClosePos": 0.875,
+   "MA20Gap%": 16.5648835618,
+   "Break20H": true,
+   "sig_n": 1,
+   "sig_mean%": 9.5537209302,
+   "sig_median%": 9.5537209302,
+   "sig_win%": 100.0,
+   "sig_worst%": 9.5537209302,
+   "last_bar": "2026-10-07"
+  },
+  {
+   "Code": "128820",
+   "Name": "대성산업",
+   "Market": "KOSPI",
+   "Close": 5060.0,
+   "Chg%": 19.621749409,
+   "Amount억": 268.15939056,
+   "VolRatio": 40.5972541393,
+   "ClosePos": 0.8514851485,
+   "MA20Gap%": 21.0236785458,
+   "Break20H": true,
+   "sig_n": 1,
+   "sig_mean%": -2.6869023569,
+   "sig_median%": -2.6869023569,
+   "sig_win%": 0.0,
+   "sig_worst%": -2.6869023569,
+   "last_bar": "2026-10-07"
+  },
+  {
+   "Code": "003350",
+   "Name": "한국화장품제조",
+   "Market": "KOSPI",
+   "Close": 17280.0,
+   "Chg%": 15.8953722334,
+   "Amount억": 809.923839,
+   "VolRatio": 2.6364948796,
+   "ClosePos": 0.7797202797,
+   "MA20Gap%": 15.7013726147,
+   "Break20H": false,
+   "sig_n": 0,
+   "sig_mean%": null,
+   "sig_median%": null,
+   "sig_win%": null,
+   "sig_worst%": null,
+   "last_bar": "2026-10-07"
+  }
+ ],
+ "stats": null,
+ "track": [],
+ "pending": [
+  {
+   "date": "2026-10-07",
+   "Code": "096530",
+   "Name": "씨젠"
+  },
+  {
+   "date": "2026-10-07",
+   "Code": "085620",
+   "Name": "미래에셋생명"
+  },
+  {
+   "date": "2026-10-07",
+   "Code": "128820",
+   "Name": "대성산업"
+  },
+  {
+   "date": "2026-10-07",
+   "Code": "003350",
+   "Name": "한국화장품제조"
+  }
+ ]
+}
