@@ -173,8 +173,8 @@ def main():
         out(build_message(res, cfg, now, track) + (f"\n\n{link}" if link else ""))
     except Exception as e:
         if os.environ.get("GITHUB_ACTIONS"):              # 로그 없이도 Actions 요약 화면에 원인이 보이게
-            print(f"::error title=daily.py::{type(e).__name__}: {str(e)[:300]}".replace("
-", " "))
+            msg = f"{type(e).__name__}: {e}"[:300].replace("\n", " ")
+            print(f"::error title=daily.py::{msg}")
         out(f"[종가베팅 스크리너 실패] {now:%Y-%m-%d %H:%M}\n{traceback.format_exc()[-1500:]}")
         raise
 
