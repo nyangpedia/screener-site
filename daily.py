@@ -171,7 +171,10 @@ def main():
         publish_site()
         link = os.environ.get("SITE_URL", "")
         out(build_message(res, cfg, now, track) + (f"\n\n{link}" if link else ""))
-    except Exception:
+    except Exception as e:
+        if os.environ.get("GITHUB_ACTIONS"):              # 로그 없이도 Actions 요약 화면에 원인이 보이게
+            print(f"::error title=daily.py::{type(e).__name__}: {str(e)[:300]}".replace("
+", " "))
         out(f"[종가베팅 스크리너 실패] {now:%Y-%m-%d %H:%M}\n{traceback.format_exc()[-1500:]}")
         raise
 
