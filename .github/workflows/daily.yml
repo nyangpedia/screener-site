@@ -1,0 +1,27 @@
+name: daily
+on:
+  schedule:
+    - cron: "40 5 * * 1-5"   # 14:40 KST (UTC+9). GitHub 예약 실행은 5~30분 늦을 수 있어 여유를 둠
+  workflow_dispatch:          # 저장소 Actions 탭에서 수동 실행
+permissions:
+  contents: write
+concurrency: daily
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install finance-datareader pandas numpy holidays
+      - run: python test_screener.py > /dev/null
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python daily.py
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SITE_URL: https://nyangpedia.github.io/screener-site/
