@@ -1,9 +1,46 @@
 {
- "updated": "2026-10-26 20:30",
+ "updated": "2026-10-27 19:54",
  "session": "장 마감 후",
  "cost_pct": 0.33,
  "min_samples": 5,
- "candidates": [],
+ "candidates": [
+  {
+   "Code": "144960",
+   "Name": "뉴파워프라즈마",
+   "Market": "KOSDAQ",
+   "Close": 14660.0,
+   "Chg%": 11.5677321157,
+   "Amount억": 404.35832045,
+   "VolRatio": 1.7024397416,
+   "ClosePos": 0.8303571429,
+   "MA20Gap%": 12.0409645,
+   "Break20H": false,
+   "sig_n": 3,
+   "sig_mean%": 0.2717820095,
+   "sig_median%": 0.4343312102,
+   "sig_win%": 66.6666666667,
+   "sig_worst%": -0.8530125523,
+   "last_bar": "2026-10-27"
+  },
+  {
+   "Code": "077500",
+   "Name": "유니퀘스트",
+   "Market": "KOSPI",
+   "Close": 11970.0,
+   "Chg%": 11.8691588785,
+   "Amount억": 143.9731892,
+   "VolRatio": 2.0936393175,
+   "ClosePos": 0.9015151515,
+   "MA20Gap%": 16.2248762016,
+   "Break20H": false,
+   "sig_n": 0,
+   "sig_mean%": null,
+   "sig_median%": null,
+   "sig_win%": null,
+   "sig_worst%": null,
+   "last_bar": "2026-10-27"
+  }
+ ],
  "stats": {
   "n": 50,
   "mean": -1.7664683942373014,
@@ -464,5 +501,16 @@
    "ret%": -1.4163005432
   }
  ],
- "pending": []
+ "pending": [
+  {
+   "date": "2026-10-27",
+   "Code": "144960",
+   "Name": "뉴파워프라즈마"
+  },
+  {
+   "date": "2026-10-27",
+   "Code": "077500",
+   "Name": "유니퀘스트"
+  }
+ ]
 }
